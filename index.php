@@ -1,23 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Embotelladora Thomsom</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-
+  <style>
+    html{
+    background:#e0f7fa ;
+    }
+  </style>
 </head>
 <body>
 <div class="row">
   <div class="col s12 m8 l4 offset-m2 offset-l4">
-    <form action="assets/php/iniciosesion.php">
+    <form action="">
 
-    
     <div class="card">
 
-      <div class="card-action deep-orange lighten-2 white-text">
-        <h3 class='center-align'>Inicio Sesion</h3>
+      <div class="card-action cyan darken-2 white-text">
+        <h3 class='center-align'>Inicio Sesión</h3>
       </div>
 
       <div class="card-content">
@@ -32,7 +35,7 @@
         </div><br>
 
         <div class="input-field">
-          <button type='button' onclick="inicio()" class="btn-large deep-orange lighten-2 waves-effect waves-dark" style="width:100%;">Iniciar Sesion</button>
+          <button type='button' onclick="inicio()" class="btn-large cyan darken-2 waves-effect waves-dark" style="width:100%;">Iniciar Sesión</button>
         </div><br>
       </div>
       </form>

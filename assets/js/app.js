@@ -8,22 +8,29 @@ function registrar_reg(){
     "cantidad": cantidad,
     "direccion": direccion
     };
-    $.ajax({
-    url: "assets/php/agregarregistro.php",
-    type: "post",
-    data: datos,
-    // beforeSend: function() {
-    // $("#resultado").html("Procesando, espere por favor...");
-    // },
-    success: function(response) {
-    $("#resultado").html("El área del triángulo es: " +
-    response);
-    },
-    error: function(jqXHR, textStatus, errorThrown) {
-    console.log(textStatus, errorThrown);
-    $("#resultado").html("Error al realizar el cálculo");
+    if (cedula === "" || cantidad === "" || direccion === ""){
+        alert("Por favor, completa todos los campos.");
+        return false; 
     }
-    });
+    else{
+
+        $.ajax({
+        url: "assets/php/agregarregistro.php",
+        type: "post",
+        data: datos,
+        // beforeSend: function() {
+        // $("#resultado").html("Procesando, espere por favor...");
+        // },
+        success: function(response) {
+        $("#resultado").html("Se registro la compra correctamente");
+        listarregistro();
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+        console.log(textStatus, errorThrown);
+        $("#resultado").html("Error al realizar el cálculo");
+        }
+        });
+    }
 }
 
 function registrar_clie(){
@@ -38,22 +45,35 @@ function registrar_clie(){
     "apellido": apellido,
     "sexo": sexo
     };
-    $.ajax({
-    url: "assets/php/agregarcliente.php",
-    type: "post",
-    data: datos,
-    // beforeSend: function() {
-    // $("#resultado").html("Procesando, espere por favor...");
-    // },
-    success: function(response) {
-    $("#resultado").html("El área del triángulo es: " +
-    response);
-    },
-    error: function(jqXHR, textStatus, errorThrown) {
-    console.log(textStatus, errorThrown);
-    $("#resultado").html("Error al realizar el cálculo");
+    if (cedula === "" || nombre === "" || apellido === "" || sexo === ""){
+        alert("Por favor, completa todos los campos.");
+        return false; 
     }
+    else{
+        $.ajax({
+        url: "assets/php/agregarcliente.php",
+        type: "post",
+        data: datos,
+        // beforeSend: function() {
+            // $("#resultado").html("Procesando, espere por favor...");
+        // },
+        success: function(response) {
+            console.log(response);
+            if(response=="listo"){
+                $("#resultado").html("Se registro el cliente correctamente");
+                listarcliente();
+            }
+            else{
+                $("#resultado").html("El cliente ya existe");
+            }
+    },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.log(textStatus, errorThrown);
+            $("#resultado").html("Error al realizar el cálculo");
+        }
     });
+
+    }
 }
 
 function inicio(){
@@ -64,14 +84,14 @@ function inicio(){
     var datos = {
     "usuario": usuario,
     "contrasena": contrasena
-    };
-    $.ajax({
+};
+$.ajax({
     url: "assets/php/iniciosesion.php",
     type: "post",
     data: datos,
     // beforeSend: function() {
-    // $("#resultado").html("Procesando, espere por favor...");
-    // },
+        // $("#resultado").html("Procesando, espere por favor...");
+        // },
     success: function(response) {
         console.log(response);
         if(response=='listo'){
@@ -84,6 +104,52 @@ function inicio(){
     error: function(jqXHR, textStatus, errorThrown) {
     console.log(textStatus, errorThrown);
     $("#resultado").html("Error al realizar el cálculo");
-    }
+}
     });
+}
+
+function listarregistro(){
+    $.ajax({
+        url: 'assets/php/listaregistro.php',
+        type: 'GET',
+        success: function(response) {
+          const registros = JSON.parse(response);
+          let template = '';
+          registros.forEach(registro => {
+            template += `
+                    <tr>
+                    <td>${registro.id}</td>
+                    <td>${registro.cedula}</td>
+                    <td>${registro.nombre}</td>
+                    <td>${registro.apellido}</td>
+                    <td>${registro.cantidad}</td>
+                    <td>${registro.direccion}</td>
+                    <td>${registro.fecha}</td>
+                    </tr>
+                    `
+                });
+                $('#tablaregistro').html(template);
+            }
+      });
+}
+function listarcliente(){
+    $.ajax({
+        url: 'assets/php/listacliente.php',
+        type: 'GET',
+        success: function(response) {
+          const registros = JSON.parse(response);
+          let template = '';
+          registros.forEach(registro => {
+            template += `
+                    <tr>
+                    <td>${registro.cedula}</td>
+                    <td>${registro.nombre}</td>
+                    <td>${registro.apellido}</td>
+                    <td>${registro.sexo}</td>
+                    </tr>
+                    `
+                });
+                $('#tablaregistro').html(template);
+            }
+      });
 }
